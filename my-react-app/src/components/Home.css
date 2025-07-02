@@ -1,0 +1,346 @@
+/* General styling */
+.home-container {
+  max-width: 480px;
+  margin: 30px auto 70px;
+  padding: 0 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.home-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #343a40;
+  margin-bottom: 30px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;  /* centers the buttons horizontally */
+  gap: 20px;                /* space between buttons */
+  margin-top: 50px;         /* some space below the title */
+  margin-bottom: 20px;      /* the space under the buttons */
+}
+
+.button-group button {
+  margin: 0 10px;
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: 1px solid #007bff;
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-group button:hover {
+  background-color: #0056b3;
+}
+
+/* Form */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+input {
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1.8px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #007bff;
+}
+
+.submit-btn {
+  background-color: #007bff;
+  color: white;
+  border: 1px solid #007bff;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+
+
+.cancel-btn {
+  background-color: #999;
+  color: white;
+  border: none;
+}
+
+.cancel-btn:hover {
+  background-color: #666;
+}
+
+
+
+.error {
+  color: #d9534f;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: -8px;
+  margin-bottom: 8px;
+  user-select: none;
+}
+
+.form-title {
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #007bff;
+  text-align: center;
+}
+
+/* User info box */
+.user-info-box {
+  margin-top: 20px;
+  background-color: #eef6ff;
+  padding: 15px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  color: #333;
+  user-select: none;
+}
+
+.logout-btn {
+  margin-left: 12px;
+  background-color: #dc3545;
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #a71d2a;
+}
+
+/* Notification styles */
+.header {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  z-index: 1100;
+}
+
+.notification-button {
+  position: relative;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #007bff;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.notification-button:hover {
+  background-color: #e6f0ff;
+}
+
+.bell-icon::before {
+  content: "🔔";
+}
+
+.notification-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: 700;
+  user-select: none;
+  box-shadow: 0 0 3px rgba(0,0,0,0.3);
+}
+
+/* Notification popup */
+.notification-popup {
+  position: fixed;
+  top: 50px;
+  right: 10px;
+  width: 320px;
+  max-height: 420px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  z-index: 1000;
+  padding: 1rem;
+  user-select: none;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.notification-header h3 {
+  margin: 0;
+  color: #007bff;
+  user-select: text;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #666;
+  font-weight: bold;
+  line-height: 1;
+  user-select: none;
+}
+
+.notification-list {
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.no-notifications {
+  text-align: center;
+  color: #666;
+  padding: 1rem 0;
+  user-select: none;
+}
+
+.notification-item {
+  cursor: pointer;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #fafafa;
+  box-shadow: none;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.notification-item.unread {
+  font-weight: 600;
+  border-color: #ff4d4d;
+  background-color: #ffecec;
+  box-shadow: 0 0 10px rgba(255,77,77,0.2);
+}
+
+.notification-item:hover {
+  background-color: #f0f8ff;
+}
+
+.notification-message {
+  font-size: 1rem;
+  margin-bottom: 5px;
+  color: #333;
+  user-select: text;
+}
+
+.notification-time {
+  font-size: 0.75rem;
+  color: #888;
+  user-select: text;
+}
+
+/* Spinner */
+.spinner {
+  margin: 20px auto;
+  width: 40px;
+  height: 40px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  user-select: none;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Falling pizza animation wrapper without images */
+.falling-pizza {
+  position: absolute;
+  top: -100px; /* start above the screen */
+  width: 20px;
+  animation-name: fall;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  z-index: 5; /* behind the content */
+  pointer-events: none; /* so that they don't interfere with clicks */
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-100px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+
+/* Gradient animation as background */
+.home-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(270deg, #ff7e5f, #feb47b, #86a8e7, #91eae4);
+  background-size: 800% 800%;
+  animation: gradientShift 15s ease infinite;
+  filter: blur(10px);
+  opacity: 0.7;
+  border-radius: 12px;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.home-container {
+  background-color: rgba(255, 255, 255, 0.85); 
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
