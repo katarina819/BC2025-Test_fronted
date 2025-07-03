@@ -17,5 +17,5 @@ npm run dev
 ```
 
 
-By default, the application runs on port 5175 (http://localhost:5175).
-If the port is already in use, Vite will automatically select another available port, so the URL may change.
+By default, the application runs locally on http://localhost with a port chosen by Vite (most often 5175).  
+If the port is busy, Vite will automatically select another free port.
