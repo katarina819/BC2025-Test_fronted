@@ -8,7 +8,7 @@ export default defineConfig({
     port: 5175,
     open: true,
   },
-  // 👇 Za SPA fallback (vrati index.html za nepoznate rute)
+  // For SPA fallback (return index.html for unknown routes)
   build: {
     outDir: 'dist',
   },
