@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { CartProvider } from "./CartContext";
-import { NotificationProvider } from "./components/NotificationContext";
+import { NotificationProvider } from "./components/NotificationProvider";
 
 
 const userId = "02705186-7608-4e49-bd0e-450e7253735c";

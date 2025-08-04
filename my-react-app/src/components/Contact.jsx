@@ -27,7 +27,7 @@ export default function Contact() {
       <div style={{ border: "1px solid #ccc", borderRadius: "8px", overflow: "hidden" }}>
         <iframe
           title="Google map Osijek"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2744.7542086721067!2d18.67867251558228!3d45.55773677910168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475ce70df2926ff7%3A0x9e996ef3191f7d8f!2sVukovarska%20ul.%201%2C%2031000%2C%20Osijek!5e0!3m2!1sen!2shr!4v1719575555555"
+          src="http://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2744.7542086721067!2d18.67867251558228!3d45.55773677910168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475ce70df2926ff7%3A0x9e996ef3191f7d8f!2sVukovarska%20ul.%201%2C%2031000%2C%20Osijek!5e0!3m2!1sen!2shr!4v1719575555555"
           width="100%"
           height="300"
           style={{ border: 0 }}

@@ -1,56 +1,44 @@
+
 import React, { useState, useEffect } from "react";
-import { registerUser, getUserById, loginUser, updateUser, getUserNotifications } from "../services/api";
+import {
+  registerUser,
+  getUserById,
+  loginUser,
+  updateUser,
+  getUserNotifications,
+} from "../services/api";
 import "./Home.css";
 import FallingPizzas from "../components/FallingPizzas";
+import { useNotification } from "./useNotification";
+
 
 export default function Home() {
-  const generateOrderNumber = () => Math.floor(1000 + Math.random() * 9000);
+  // const generateOrderNumber = () => Math.floor(1000 + Math.random() * 9000);
 
-  const [notifications, setNotifications] = useState([]);
-
+  // const [notifications, setNotifications] = useState([]);
   const [registeredUser, setRegisteredUser] = useState(null);
-
-  // After the registered user is set up, we retrieve his notifications
-  useEffect(() => {
-  if (!registeredUser || !registeredUser.id) return;
-
-  getUserNotifications(registeredUser.id)
-    .then(res => setNotifications(res.data))
-    .catch(err => console.error(err));
-}, [registeredUser]);
-
-  // Initial registration data
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    age: "",
-    phoneNumber: "",
-    address: ""
-  });
-
-  // To edit your profile
+  const [formData, setFormData] = useState({ name: "", email: "", age: "", phoneNumber: "", address: "" });
   const [editFormData, setEditFormData] = useState(formData);
-
-  // For the login form
   const [loginData, setLoginData] = useState({ name: "", email: "" });
-
-  // Validation errors
   const [errors, setErrors] = useState({});
-
-  // Login error message
   const [loginError, setLoginError] = useState(null);
-
-  // Form loading and display statuses
   const [isRegistering, setIsRegistering] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [showRegisterForm, setShowRegisterForm] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
-
+  // const [showNotifications, setShowNotifications] = useState(false);
   const isLoggedIn = !!registeredUser;
+  const { logout, addNotification } = useNotification();
 
-  // When mounting the component, load the user from localStorage and refresh the data and notifications
+
+  useEffect(() => {
+    if (!registeredUser?.id) return;
+    getUserNotifications(registeredUser.id)
+      // .then(res => setNotifications(res.data ?? []))
+      .catch(console.error);
+  }, [registeredUser]);
+
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -61,26 +49,23 @@ export default function Home() {
           setRegisteredUser(res.data);
           return getUserNotifications(res.data.id);
         })
-        .then(n => setNotifications(n.data))
-        .catch(err => console.error(err));
+        // .then(n => setNotifications(n.data))
+        .catch(console.error);
     }
   }, []);
 
-  // User login function
   const handleLogin = async e => {
     e.preventDefault();
     setLoginError(null);
     setIsLoggingIn(true);
-
     try {
       const response = await loginUser(loginData);
       const user = response.data;
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("userId", user.id);
       setRegisteredUser(user);
-      const notifs = await getUserNotifications(user.id);
-      setNotifications(notifs.data);
-
+      // const notifs = await getUserNotifications(user.id);
+      // setNotifications(notifs.data);
       setShowLoginForm(false);
       addNotification(`Welcome back, ${user.name}!`);
     } catch (error) {
@@ -91,55 +76,46 @@ export default function Home() {
     }
   };
 
-  // Add a new notification to the status
-  const addNotification = (message) => {
+  /* const addLocalNotification = (message) => {
     const newNotification = {
-      id: Date.now(),
+      notificationId: Date.now(),
       message,
-      read: false,
+      isRead: false,
       time: "Just now",
     };
-    setNotifications(prev => [newNotification, ...prev]);
-  };
+    // setNotifications(prev => [newNotification, ...prev]);
+  }; */
 
-  // Number of unread notifications
-
-  const unreadCount = notifications.filter(n => !n.read).length;
-  // Notification display toggle
+  /* const unreadCount = (notifications || []).filter(n => !(n.read ?? n.isRead)).length;
   const toggleNotifications = () => setShowNotifications(prev => !prev);
 
-  // Mark the notification as read
-  const markAsRead = (id) => {
+  const markAsRead = id => {
     setNotifications(prev =>
-      prev.map(n => (n.id === id ? { ...n, read: true } : n))
+      prev.map(n => {
+        const key = n.id ?? n.notificationId;
+        return key === id ? { ...n, read: true, isRead: true } : n;
+      })
     );
-  };
+  }; */
 
-  // Validation of the form for registration and editing
   const validate = data => {
     const newErrors = {};
     if (!data.name.trim()) newErrors.name = "Name is required";
     if (!data.email.includes("@")) newErrors.email = "Email is invalid";
-    if (data.age && (+data.age <= 0 || isNaN(+data.age)))
-      newErrors.age = "Age must be a positive number";
+    if (data.age && (+data.age <= 0 || isNaN(+data.age))) newErrors.age = "Age must be a positive number";
     if (!data.phoneNumber.trim()) newErrors.phoneNumber = "Phone is required";
     if (!data.address.trim()) newErrors.address = "Address is required";
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handlers for input fields (registration)
-  const handleChange = e => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  const handleChange = e => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleLoginChange = e => setLoginData(prev => ({ ...prev, [e.target.name]: e.target.value }));
 
-  // Handler for submitting the registration form
   const handleSubmit = async e => {
     e.preventDefault();
     if (!validate(formData)) return;
     setIsRegistering(true);
-
     try {
       const response = await registerUser({
         name: formData.name,
@@ -150,16 +126,14 @@ export default function Home() {
           address: formData.address,
         },
       });
-
       const user = response.data;
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("userId", user.id);
       setRegisteredUser(user);
       setShowRegisterForm(false);
       alert(`Welcome, ${user.name}!`);
-
-      const orderNumber = generateOrderNumber();
-      addNotification(`Your order #${orderNumber} is being prepared.`);
+      // addLocalNotification(`Your order #${generateOrderNumber()} is being prepared.`);
+      // setShowNotifications(true);
     } catch (error) {
       console.error("Registration error:", error.response?.data || error.message);
       alert("Error during registration.");
@@ -168,23 +142,24 @@ export default function Home() {
     }
   };
 
-  // Handler for login input fields
-  const handleLoginChange = e => {
-    setLoginData(prev => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  const handleLogout = async () => {
+  try {
+    await logout(); // <- iz NotificationContexta, briše notifikacije i localStorage "user"
+  } catch (err) {
+    console.error("Logout failed:", err);
+  }
 
-  // Logout handler
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("userId");
-    setRegisteredUser(null);
-    setShowLoginForm(false);
-    setShowRegisterForm(false);
-    setIsEditing(false);
-    addNotification("You have logged out.");
-  };
+  // Ostalo lokalno čišćenje korisničkog UI-a
+  localStorage.removeItem("userId"); // dodatno (ako se koristi)
+  setRegisteredUser(null);
+  setShowLoginForm(false);
+  setShowRegisterForm(false);
+  setIsEditing(false);
 
-  // Start editing profile
+  addNotification("You have logged out."); // lokalna info poruka
+};
+
+
   const startEditing = () => {
     if (registeredUser) {
       setEditFormData({
@@ -192,7 +167,7 @@ export default function Home() {
         email: registeredUser.email,
         age: registeredUser.age || "",
         phoneNumber: registeredUser.profile?.phoneNumber || "",
-        address: registeredUser.profile?.address || ""
+        address: registeredUser.profile?.address || "",
       });
       setIsEditing(true);
       setShowRegisterForm(false);
@@ -200,25 +175,19 @@ export default function Home() {
     }
   };
 
-  // Handler for changing input in edit form
-  const handleEditChange = e => {
-    setEditFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  const handleEditChange = e => setEditFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
 
-  // Save profile changes
   const handleUpdate = async e => {
     e.preventDefault();
     if (!validate(editFormData)) return;
-
     try {
       const response = await updateUser(registeredUser.id, {
         name: editFormData.name,
         email: editFormData.email,
         age: parseInt(editFormData.age),
         phoneNumber: editFormData.phoneNumber,
-        address: editFormData.address
+        address: editFormData.address,
       });
-
       const updated = response.data;
       localStorage.setItem("user", JSON.stringify(updated));
       setRegisteredUser(updated);
@@ -231,29 +200,20 @@ export default function Home() {
     }
   };
 
-  // Presentation of the registration form
   const handleShowRegisterForm = () => {
     setShowRegisterForm(true);
     setShowLoginForm(false);
     setIsEditing(false);
   };
 
-  // Display of the login form
   const handleShowLoginForm = () => {
     setShowLoginForm(true);
     setShowRegisterForm(false);
     setIsEditing(false);
   };
 
-  // Cancel handler for closing forms
   const handleCancel = () => {
-    setFormData({
-      name: "",
-      email: "",
-      age: "",
-      phoneNumber: "",
-      address: ""
-    });
+    setFormData({ name: "", email: "", age: "", phoneNumber: "", address: "" });
     setLoginData({ name: "", email: "" });
     setErrors({});
     setShowRegisterForm(false);
@@ -263,44 +223,46 @@ export default function Home() {
   return (
     <>
       <FallingPizzas count={20} />
-
-      <header className="header">
-        <button
-          onClick={toggleNotifications}
-          className="notification-button"
-          aria-label="Toggle notifications"
-        >
+    {/*   <header className="header">
+        <button onClick={toggleNotifications} className="notification-button" aria-label="Toggle notifications">
           <span className="bell-icon" />
           {unreadCount > 0 && <span className="notification-badge">{unreadCount}</span>}
         </button>
-      </header>
+      </header> */}
 
-      {showNotifications && (
+     {/*  {showNotifications && (
         <div className="notification-popup">
           <div className="notification-header">
             <h3>Notifications</h3>
             <button onClick={() => setShowNotifications(false)} className="close-btn">×</button>
           </div>
           <div className="notification-list">
-            {notifications.length === 0 ? (
-              <div className="no-notifications">No notifications</div>
-            ) : (
-              notifications.map(({ id, message, read, time }) => (
-                <div
-                  key={id}
-                  onClick={() => markAsRead(id)}
-                  className={`notification-item ${read ? "read" : "unread"}`}
-                  title={read ? "Read" : "Unread - click to mark as read"}
-                >
-                  <p className="notification-message">{message}</p>
-                  <span className="notification-time">{time}</span>
-                </div>
-              ))
-            )}
-          </div>
+  {(notifications && notifications.length > 0) ? (
+    notifications.map(n => {
+      const key = n.id ?? n.notificationId;
+      const message = n.message ?? n.text ?? "No message";
+      const read = n.read ?? n.isRead ?? false;
+      const time = n.time ?? n.createdAt ?? "";
+      return (
+        <div
+          key={key}
+          onClick={() => markAsRead(key)}
+          className={`notification-item ${read ? "read" : "unread"}`}
+          title={read ? "Read" : "Unread - click to mark as read"}
+        >
+          <p className="notification-message">{message}</p>
+          <span className="notification-time">{time}</span>
         </div>
-      )}
+      );
+    })
+  ) : (
+    <div className="no-notifications">No notifications</div>
+  )}
+</div> */}
 
+      {/*   </div>
+      )}
+ */}
       <div className="home-container">
         <h1 className="home-title">Welcome to Pizza & Drinks Box!</h1>
 
@@ -324,7 +286,7 @@ export default function Home() {
         )}
 
         {showRegisterForm && !isLoggedIn && (
-          <>
+          <div>
             <h2 className="form-title">Register</h2>
             {isRegistering ? (
               <div className="spinner" />
@@ -351,7 +313,7 @@ export default function Home() {
                 </div>
               </form>
             )}
-          </>
+          </div>
         )}
 
         {showLoginForm && !isLoggedIn && (
@@ -361,11 +323,7 @@ export default function Home() {
               <input name="name" placeholder="Name" value={loginData.name} onChange={handleLoginChange} required />
               <input name="email" type="email" placeholder="Email" value={loginData.email} onChange={handleLoginChange} required />
               {loginError && <div className="error">{loginError}</div>}
-              <button
-                disabled={isLoggingIn}
-                type="submit"
-                className="submit-btn"
-              >
+              <button disabled={isLoggingIn} type="submit" className="submit-btn">
                 {isLoggingIn ? "Logging In..." : "Log In"}
               </button>
             </form>

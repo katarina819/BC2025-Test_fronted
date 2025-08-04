@@ -1,6 +1,10 @@
 import axios from "axios";
 
-const API_BASE = "https://localhost:7276";
+const API_BASE = "http://localhost:5227";
+
+export const markNotificationAsRead = (notificationId) =>
+  axios.patch(`${API_BASE}/api/notifications/${notificationId}/read`);
+
 
 export const registerUser = async (userData) => {
   return await axios.post(`${API_BASE}/api/users`, userData, {
@@ -11,11 +15,11 @@ export const registerUser = async (userData) => {
 };
 
 export async function placePizzaOrder(orderData) {
-  return axios.post("https://localhost:7276/api/pizzaorders", orderData);
+  return axios.post("http://localhost:5227/api/pizzaorders", orderData);
 }
 
 export async function placeDrinksOrder(orderData) {
-  return axios.post("https://localhost:7276/api/drinksorder", orderData);
+  return axios.post("http://localhost:5227/api/drinksorder", orderData);
 }
 
 export async function getUserById(userId) {
@@ -65,7 +69,7 @@ export const updateUser = (id, updatedData) => {
 
 
 export async function sendPayment(payment) {
-  return fetch('https://localhost:7276/api/payments', {
+  return fetch('http://localhost:5227/api/payments', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payment),
@@ -75,20 +79,36 @@ export async function sendPayment(payment) {
   });
 }
 
-export const getUserNotifications = (userId) => {
-  return axios.get(`${API_BASE}/api/notification/users/${userId}/notifications`, {
-    withCredentials: true,  // send cookie token
+export const getUserNotifications = (userId) =>
+  axios.get(`/api/notifications/user/${userId}`).then(res => res.data);
+
+
+
+// Funkcija za update statusa notifikacije
+export const updateNotificationStatus = async (userId, id, update) => {
+  return axios.patch(
+    `${API_BASE}/api/notification/users/${userId}/notifications/${id}`, update, {
+    headers: {
+      "Content-Type": "application/json"
+    }
   });
 };
 
+export const postNotification = async (notification) => {
+  const response = await axios.post(
+    "http://localhost:5227/api/notification",
+    notification,
+    { withCredentials: true }
+  );
+  return response.data;
+};
+
+export const deleteUserNotifications = (userId) => 
+  axios.delete(`${API_BASE}/api/notification/users/${userId}`, { withCredentials: true });
 
 
 
 
-
-
-export const markNotificationAsRead = (notificationId) =>
-  axios.patch(`${API_BASE}/api/notifications/${notificationId}/read`);
 
 
 

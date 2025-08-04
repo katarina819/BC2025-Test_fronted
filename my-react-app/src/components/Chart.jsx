@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from "../CartContext";
 import { sendPayment } from "../services/api";
+import { useNotification } from "../components/useNotification";
 
 
 export default function Chart() {
   const { cartItems, clearCart } = useCart();
-
+  const { addNotificationBackend } = useNotification();
   const [expiryMonth, setExpiryMonth] = useState("");
-const [expiryYear, setExpiryYear] = useState("");
+  const [expiryYear, setExpiryYear] = useState("");
 
 
   const [formData, setFormData] = useState({
@@ -118,7 +119,7 @@ const handleSubmit = async (e) => {
           pizzaId: p.id,
           quantity: p.quantity
         }));
-        const pizzaResponseRaw = await fetch("https://localhost:7276/api/pizzaorders", {
+        const pizzaResponseRaw = await fetch("http://localhost:5227/api/pizzaorders", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -162,7 +163,7 @@ const handleSubmit = async (e) => {
           drinkId: d.id,
           quantity: d.quantity
         }));
-        const drinksResponseRaw = await fetch("https://localhost:7276/api/drinksorder", {
+        const drinksResponseRaw = await fetch("http://localhost:5227/api/drinksorder", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -198,7 +199,14 @@ const handleSubmit = async (e) => {
       }
 
       alert(`Order placed! Payment method: ${paymentMethod === "cash" ? "Cash" : "Card"}`);
-      clearCart();
+try {
+   addNotificationBackend("Your order has been received and is being processed.", "/orders");
+
+} catch (e) {
+  console.error("Failed to add notification:", e);
+}
+clearCart();
+
     } catch (err) {
       console.error("Order failed:", err);
       alert(err.message || "Error while placing order.");
