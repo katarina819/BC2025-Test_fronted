@@ -115,10 +115,12 @@ const handleSubmit = async (e) => {
     try {
       // 1. Send pizza order
 if (pizzas.length > 0) {
-  const pizzaItems = pizzas.map((p) => ({
-    PizzaId: p.id,
-    Quantity: p.quantity
-  }));
+  const pizzaItems = pizzas.map(p => ({
+  PizzaId: p.id,
+  Quantity: p.quantity,
+  UnitPrice: p.prices[p.size]  
+}));
+
 
   const pizzaResponseRaw = await fetch(`${import.meta.env.VITE_API_URL}/api/pizzaorders`, {
     method: "POST",
