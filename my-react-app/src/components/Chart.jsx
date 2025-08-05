@@ -114,48 +114,47 @@ const handleSubmit = async (e) => {
 
     try {
       // 1. Send pizza order
-      if (pizzas.length > 0) {
-        const pizzaItems = pizzas.map((p) => ({
-          pizzaId: p.id,
-          quantity: p.quantity
-        }));
-        const pizzaResponseRaw = await fetch(`${import.meta.env.VITE_API_URL}/api/pizzaorders`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userId,
-            items: pizzaItems,
-            paymentMethod,
-            // Add card data if card
-            cardDetails: paymentMethod === "card"
-  ? { cardNumber, cvv, expiryDate: `${expiryMonth}/${expiryYear}` }
-  : null
-          })
-        });
+if (pizzas.length > 0) {
+  const pizzaItems = pizzas.map((p) => ({
+    PizzaId: p.id,
+    Quantity: p.quantity
+  }));
 
-        if (!pizzaResponseRaw.ok) {
-          throw new Error("Failed to place pizza order");
-        }
+  const pizzaResponseRaw = await fetch(`${import.meta.env.VITE_API_URL}/api/pizzaorders`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      UserId: userId,
+      Items: pizzaItems,
+      PaymentMethod: paymentMethod // "cash" ili "card"
+      // NEMA više CardDetails
+    })
+  });
 
-        const pizzaOrderResponse = await pizzaResponseRaw.json();
+  if (!pizzaResponseRaw.ok) {
+    throw new Error("Failed to place pizza order");
+  }
 
-        if (!pizzaOrderResponse?.orderId) {
-          throw new Error("Pizza orderId missing from response");
-        }
+  const pizzaOrderResponse = await pizzaResponseRaw.json();
 
-        // Send payment for pizza order
-        await sendPayment({
-          orderId: pizzaOrderResponse.orderId,
-          paymentMethodId: paymentMethod === "cash" ? 2 : 1,
-          amount: calculateTotal(pizzas),
-          paymentDate: new Date().toISOString(),
-          orderType: "pizza"
-        });
+  if (!pizzaOrderResponse?.orderId) {
+    throw new Error("Pizza orderId missing from response");
+  }
 
-        if (paymentMethod === "card" && pizzaOrderResponse.cardPaymentTransactionId) {
-          alert(`Pizza card payment transaction ID: ${pizzaOrderResponse.cardPaymentTransactionId}`);
-        }
-      }
+  // 2. Send payment for pizza order
+  await sendPayment({
+    orderId: pizzaOrderResponse.orderId,
+    paymentMethodId: paymentMethod === "cash" ? 2 : 1,
+    amount: calculateTotal(pizzas),
+    paymentDate: new Date().toISOString(),
+    orderType: "pizza"
+  });
+
+  // 3. Optional feedback
+  if (paymentMethod === "card" && pizzaOrderResponse.cardPaymentTransactionId) {
+    alert(`Pizza card payment transaction ID: ${pizzaOrderResponse.cardPaymentTransactionId}`);
+  }
+}
 
       // 2. Send drinks order
       if (drinks.length > 0) {
