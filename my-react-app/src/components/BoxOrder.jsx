@@ -13,7 +13,7 @@ export default function BoxOrder() {
 
   // Selected pizza details: id, size, and quantity
   const [selectedPizzaId, setSelectedPizzaId] = useState("");
-  const [selectedPizzaSize, setSelectedPizzaSize] = useState("Srednja"); // Default size, but options are "small", "medium", "large"
+  const [selectedPizzaSize, setSelectedPizzaSize] = useState("medium"); // Default size, but options are "small", "medium", "large"
   const [pizzaQty, setPizzaQty] = useState(1);
 
   // Selected drink details: id and quantity
