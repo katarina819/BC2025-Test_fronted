@@ -26,8 +26,11 @@ export default function BoxOrder() {
   // Fetch pizzas and drinks from backend API when component mounts
   useEffect(() => {
     getAllPizzas()
-      .then(res => setPizzaList(res.data))
-      .catch(err => console.error("Error fetching pizzas:", err));
+      .then(res => {
+    console.log("Fetched pizzas:", res.data); // <-- dodaj ovo
+    setPizzaList(res.data);
+  })
+  .catch(err => console.error("Error fetching pizzas:", err));
 
     getAllDrinks()
       .then(res => setDrinkList(res.data))
