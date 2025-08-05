@@ -160,19 +160,23 @@ const handleSubmit = async (e) => {
       // 2. Send drinks order
       if (drinks.length > 0) {
         const drinkItems = drinks.map((d) => ({
-          drinkId: d.id,
-          quantity: d.quantity
-        }));
-        const drinksResponseRaw = await fetch(`${import.meta.env.VITE_API_URL}/api/drinksorder`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userId,
-            items: drinkItems,
-            paymentMethod,
-            cardDetails: paymentMethod === "card" ? { cardNumber, cvv, expiryDate } : null
-          })
-        });
+  DrinkId: d.id,
+  Quantity: d.quantity
+}));
+
+const drinksResponseRaw = await fetch(`${import.meta.env.VITE_API_URL}/api/drinksorder`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    UserId: userId,
+    Items: drinkItems,
+    PaymentMethod: paymentMethod,
+    CardDetails: paymentMethod === "card"
+      ? { CardNumber: cardNumber, CVV: cvv, ExpiryDate: expiryDate }
+      : null
+  })
+});
+
 
         if (!drinksResponseRaw.ok) {
           throw new Error("Failed to place drinks order");
