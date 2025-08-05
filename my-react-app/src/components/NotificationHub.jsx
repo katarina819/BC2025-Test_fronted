@@ -8,7 +8,7 @@ const NotificationHub = () => {
 
   useEffect(() => {
     const newConnection = new HubConnectionBuilder()
-      .withUrl("http://localhost:5227/notificationHub", {
+      .withUrl(`${import.meta.env.VITE_API_URL}/notificationHub`, {
         withCredentials: true,
       })
       .configureLogging(LogLevel.Information)

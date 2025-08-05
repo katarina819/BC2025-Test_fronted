@@ -77,7 +77,7 @@ export const NotificationProvider = ({ userId, children }) => {
     dispatch({ type: "FETCH_START" });
     try {
       const response = await axios.get(
-        `http://localhost:5227/api/notification/users/${userId}/notifications`,
+        `${import.meta.env.VITE_API_URL}/api/notification/users/${userId}/notifications`,
         { withCredentials: true }
       );
        if (userId === currentUserId) {
@@ -97,7 +97,7 @@ export const NotificationProvider = ({ userId, children }) => {
     if (!userId) return;
 
     const newConnection = new HubConnectionBuilder()
-      .withUrl("http://localhost:5227/notificationHub", {
+      .withUrl(`${import.meta.env.VITE_API_URL}/notificationHub`, {
         withCredentials: true,
       })
       .configureLogging(LogLevel.Information)
@@ -187,7 +187,7 @@ connection
   const clearNotifications = async () => {
   try {
     await axios.put(
-      `http://localhost:5227/api/notification/users/${userId}/notifications/clear`,
+      `${import.meta.env.VITE_API_URL}/api/notification/users/${userId}/notifications/clear`,
       {},
       { withCredentials: true }
     );
@@ -200,7 +200,7 @@ connection
 async function deleteUserNotifications(userId) {
   if (!userId) return;
 
-  await fetch(`http://localhost:5227/api/notification/user/${userId}`, {
+  await fetch(`${import.meta.env.VITE_API_URL}/api/notification/user/${userId}`, {
     method: "DELETE",
     credentials: "include",
   });

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = "http://localhost:5227";
+const API_BASE = import.meta.env.VITE_API_URL;
 
 export const markNotificationAsRead = (notificationId) =>
   axios.patch(`${API_BASE}/api/notifications/${notificationId}/read`);
@@ -15,11 +15,11 @@ export const registerUser = async (userData) => {
 };
 
 export async function placePizzaOrder(orderData) {
-  return axios.post("http://localhost:5227/api/pizzaorders", orderData);
+  return axios.post(`${API_BASE}/api/pizzaorders`, orderData);
 }
 
 export async function placeDrinksOrder(orderData) {
-  return axios.post("http://localhost:5227/api/drinksorder", orderData);
+  return axios.post(`${API_BASE}/api/drinksorder`, orderData);
 }
 
 export async function getUserById(userId) {
@@ -69,7 +69,7 @@ export const updateUser = (id, updatedData) => {
 
 
 export async function sendPayment(payment) {
-  return fetch('http://localhost:5227/api/payments', {
+  return fetch(`${API_BASE}/api/payments`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payment),
@@ -96,7 +96,7 @@ export const updateNotificationStatus = async (userId, id, update) => {
 
 export const postNotification = async (notification) => {
   const response = await axios.post(
-    "http://localhost:5227/api/notification",
+    `${API_BASE}/api/notification`,
     notification,
     { withCredentials: true }
   );

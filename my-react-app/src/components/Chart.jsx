@@ -119,7 +119,7 @@ const handleSubmit = async (e) => {
           pizzaId: p.id,
           quantity: p.quantity
         }));
-        const pizzaResponseRaw = await fetch("http://localhost:5227/api/pizzaorders", {
+        const pizzaResponseRaw = await fetch(`${import.meta.env.VITE_API_URL}/api/pizzaorders`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -163,7 +163,7 @@ const handleSubmit = async (e) => {
           drinkId: d.id,
           quantity: d.quantity
         }));
-        const drinksResponseRaw = await fetch("http://localhost:5227/api/drinksorder", {
+        const drinksResponseRaw = await fetch(`${import.meta.env.VITE_API_URL}/api/drinksorder`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

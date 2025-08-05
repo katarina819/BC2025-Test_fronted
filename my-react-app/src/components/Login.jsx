@@ -12,7 +12,8 @@ export default function Login() {
   e.preventDefault();
 
   try {
-    const response = await axios.post('http://localhost:5227/login', {
+    const response = await axios.post(
+    `${import.meta.env.VITE_API_URL}/login`, {
       name,
       email,
       rememberMe: true
