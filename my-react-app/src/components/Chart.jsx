@@ -24,7 +24,7 @@ export default function Chart() {
   // Nova stanja za kartično plaćanje
   const [cardNumber, setCardNumber] = useState("");
   const [cvv, setCvv] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
+  // const [expiryDate, setExpiryDate] = useState("");
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -53,7 +53,7 @@ export default function Chart() {
     if (e.target.value !== "card") {
       setCardNumber("");
       setCvv("");
-      setExpiryDate("");
+      // setExpiryDate("");
     }
   };
 
@@ -148,7 +148,6 @@ if (pizzas.length > 0) {
     orderId: pizzaOrderResponse.orderId,
     paymentMethodId: paymentMethod === "cash" ? 2 : 1,
     amount: calculateTotal(pizzas),
-    paymentDate: new Date().toISOString(),
     orderType: "pizza"
   });
 
@@ -169,12 +168,12 @@ const drinksResponseRaw = await fetch(`${import.meta.env.VITE_API_URL}/api/drink
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
-    UserId: userId,
-    Items: drinkItems,
-    PaymentMethod: paymentMethod,
-    CardDetails: paymentMethod === "card"
-      ? { CardNumber: cardNumber, CVV: cvv, ExpiryDate: expiryDate }
-      : null
+  UserId: userId,
+  Items: drinkItems,
+  PaymentMethod: paymentMethod,
+  CardDetails: paymentMethod === "card"
+    ? { CardNumber: cardNumber, CVV: cvv, ExpiryDate: `${expiryMonth}/${expiryYear.toString().slice(-2)}` }
+    : null
   })
 });
 
