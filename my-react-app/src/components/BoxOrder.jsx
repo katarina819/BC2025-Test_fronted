@@ -23,6 +23,14 @@ export default function BoxOrder() {
   // To track which button is temporarily active (for styling feedback)
   const [activeButton, setActiveButton] = useState(null);
 
+  const sizeMap = {
+    "Mala": "small",
+    "Srednja": "medium",
+    "Velika": "large",
+  };
+
+
+
   // Fetch pizzas and drinks from backend API when component mounts
   useEffect(() => {
     getAllPizzas()
@@ -39,7 +47,7 @@ export default function BoxOrder() {
 
   // Find the selected pizza object matching chosen id and size
   const selectedPizza = pizzaList.find(
-    p => p.pizzaId === selectedPizzaId && p.size === selectedPizzaSize
+    (p) => p.pizzaId === selectedPizzaId && sizeMap[p.size] === selectedPizzaSize
   );
 
   // Find the selected drink object matching chosen id
@@ -126,9 +134,9 @@ export default function BoxOrder() {
             value={selectedPizzaSize}
             onChange={(e) => setSelectedPizzaSize(e.target.value)}
           >
-            <option value="small">small</option>
-            <option value="medium">medium</option>
-            <option value="large">large</option>
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
           </select>
 
           <select
@@ -138,7 +146,7 @@ export default function BoxOrder() {
             <option value="">Select Pizza</option>
             {/* Filter pizzas by selected size */}
             {pizzaList
-              .filter((p) => p.size === selectedPizzaSize)
+              .filter((p) => sizeMap[p.size] === selectedPizzaSize)
               .map((p) => (
                 <option key={p.pizzaId} value={p.pizzaId}>
                   {p.name}
