@@ -117,8 +117,8 @@ const handleSubmit = async (e) => {
 if (pizzas.length > 0) {
   const pizzaItems = pizzas.map(p => ({
   PizzaId: p.id,
-  Quantity: p.quantity,
-  UnitPrice: p.prices[p.size]  
+  Quantity: p.quantity
+   
 }));
 
 
