@@ -1,12 +1,18 @@
 
 import { Link } from "react-router-dom";
 import "../App.css";
-
+import { useState } from "react";
 
 export default function Navbar( ) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <nav className="navbar">
-  <ul className="nav-list">
+      <button className="nav-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+        ☰
+      </button>
+
+  <ul className={`nav-list ${menuOpen ? "open" : ""}`}>
     <li><Link to="/">Home</Link></li>
     <li><Link to="/about">About</Link></li>
     <li><Link to="/menu">Menu</Link></li>
