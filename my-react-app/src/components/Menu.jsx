@@ -30,19 +30,16 @@ const drinks = [
 export default function Menu() {
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filter pizzas by entered searchTerm (case-insensitive)
   const filteredPizzas = pizzas.filter(pizza =>
     pizza.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Filter drinks by entered searchTerm
   const filteredDrinks = drinks.filter(drink =>
     drink.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
   
   return (
     <div style={{ padding: "2rem", fontFamily: "Segoe UI, sans-serif", backgroundColor: "#f7f7f7" }}>
-      {/* Search input */}
       <div style={{ marginBottom: "2rem", textAlign: "left" }}>
         <input
           type="text"
@@ -59,7 +56,6 @@ export default function Menu() {
         />
       </div>
 
-      {/* Pizza Menu */}
       <h2 className="menu-title">Pizza Menu</h2>
       <div className="menu-card">
         <table>
@@ -76,11 +72,11 @@ export default function Menu() {
             {filteredPizzas.length > 0 ? (
               filteredPizzas.map((pizza, index) => (
                 <tr key={index}>
-                  <td>{pizza.name}</td>
-                  <td>{pizza.ingredients}</td>
-                  <td>{pizza.prices.Small.toFixed(2)}</td>
-                  <td>{pizza.prices.Medium.toFixed(2)}</td>
-                  <td>{pizza.prices.Large.toFixed(2)}</td>
+                  <td data-label="Pizza">{pizza.name}</td>
+                  <td data-label="Ingredients">{pizza.ingredients}</td>
+                  <td data-label="Small (€)">{pizza.prices.Small.toFixed(2)}</td>
+                  <td data-label="Medium (€)">{pizza.prices.Medium.toFixed(2)}</td>
+                  <td data-label="Large (€)">{pizza.prices.Large.toFixed(2)}</td>
                 </tr>
               ))
             ) : (
@@ -90,7 +86,6 @@ export default function Menu() {
         </table>
       </div>
 
-      {/* Drinks Menu */}
       <h2 className="menu-title" style={{ marginTop: "3rem" }}>Drink Menu</h2>
       <div className="menu-card">
         <table>
@@ -105,9 +100,9 @@ export default function Menu() {
             {filteredDrinks.length > 0 ? (
               filteredDrinks.map((drink, index) => (
                 <tr key={index}>
-                  <td>{drink.name}</td>
-                  <td>{drink.size}</td>
-                  <td>{drink.price.toFixed(2)}</td>
+                  <td data-label="Drink">{drink.name}</td>
+                  <td data-label="Size">{drink.size}</td>
+                  <td data-label="Price (€)">{drink.price.toFixed(2)}</td>
                 </tr>
               ))
             ) : (

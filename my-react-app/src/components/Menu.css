@@ -33,3 +33,99 @@ th {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   margin-bottom: 2rem;
 }
+
+/* Osnovni stilovi tablice i elemenata */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #f0f0f0;
+  color: #333;
+  font-weight: 600;
+}
+
+.menu-title {
+  font-size: 1.8rem;
+  color: #444;
+  text-align: center;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #bbb;
+  padding-bottom: 0.5rem;
+}
+
+.menu-card {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+/* ----- RESPONSIVNOST ZA MOBITEL ----- */
+@media (max-width: 600px) {
+  .menu-card {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .menu-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+    width: 100%;
+  }
+
+  /* Sakrij zaglavlja tablice */
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  td {
+    /* Prikaži svaki podatak kao red sa labelom */
+    border: none;
+    padding-left: 50%;
+    position: relative;
+    text-align: left;
+  }
+
+  /* Dodaj labelu prije svakog podatka */
+  td:before {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 45%;
+    white-space: nowrap;
+    font-weight: 600;
+    color: #555;
+    content: attr(data-label);
+  }
+}
+

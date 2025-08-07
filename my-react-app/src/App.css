@@ -603,4 +603,179 @@
   }
 }
 
+.about-container {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fff8f0;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  color: #3a3a3a;
+  line-height: 1.6;
+}
+
+.about-container h2 {
+  color: #d84315;
+  margin-bottom: 1rem;
+}
+
+.about-container p {
+  font-size: 1.1rem;
+}
+
+.stats-container {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.stat-box {
+  color: white;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-align: center;
+  flex: 1 1 30%;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  margin-top: 0.25rem;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .stats-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-box {
+    width: 80%;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Glavni wrapper za BoxOrder */
+.box-order-wrapper {
+  padding: 15px;
+  max-width: 500px; /* ograniči širinu za mobitel */
+  margin: auto;
+  font-family: Arial, sans-serif;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+}
+
+/* Kontejner s dvije sekcije */
+.dual-order-container {
+  display: flex;
+  flex-direction: column; /* na mobitelima jedan ispod drugog */
+  gap: 30px;
+}
+
+/* Svaka sekcija (pizza, drinks) */
+.order-section {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 15px;
+  background: #fafafa;
+}
+
+/* Naslov sekcije */
+.box-order-title {
+  margin-bottom: 15px;
+  font-size: 1.4rem;
+  text-align: center;
+  color: #333;
+}
+
+/* Red s inputima za pizzu i piće */
+.pizza-input-row,
+.drink-input-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+/* Select i input veličina i stil */
+select, input[type=number] {
+  flex: 1 1 100px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+select:focus, input[type=number]:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+/* Red s cijenom */
+.pizza-price-row, .drink-price-row {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 15px;
+}
+
+/* Red s gumbima */
+.pizza-buttons-row,
+.drink-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* Stil gumba */
+button {
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  transition: background-color 0.25s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Stil aktivnog gumba */
+.active-btn {
+  background-color: #28a745 !important; /* zelena boja na klik */
+  box-shadow: 0 0 8px #28a745aa;
+}
+
+/* RESPONSIVNOST */
+
+/* Na širim ekranima (desktop) dva stupca */
+@media (min-width: 600px) {
+  .dual-order-container {
+    flex-direction: row;
+    justify-content: center;
+    gap: 40px;
+  }
+
+  .order-section {
+    flex: 1 1 300px;
+  }
+}
+
 
