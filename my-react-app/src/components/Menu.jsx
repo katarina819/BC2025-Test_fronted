@@ -46,15 +46,9 @@ export default function Menu() {
           placeholder="Search pizzas and drinks..."
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
-          style={{
-            padding: "0.5rem 1rem",
-            width: "300px",
-            fontSize: "1rem",
-            borderRadius: "8px",
-            border: "1px solid #ccc"
-          }}
-        />
-      </div>
+           className="search-box"
+  />
+</div>
 
       <h2 className="menu-title">Pizza Menu</h2>
       <div className="menu-card">

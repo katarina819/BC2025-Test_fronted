@@ -133,3 +133,21 @@ th {
   margin-bottom: 4px; 
 }
 }
+
+
+
+.search-box {
+  padding: 0.5rem 1rem;
+  width: 300px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+@media (max-width: 600px) {
+  .search-box {
+    width: 100%;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+  }
+}
