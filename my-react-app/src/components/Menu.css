@@ -71,61 +71,77 @@ th {
   margin-bottom: 2rem;
 }
 
-/* ----- RESPONSIVNOST ZA MOBITEL ----- */
+/* Osnovni stil za tablice */
+.menu-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.menu-card th, 
+.menu-card td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.menu-card th {
+  background-color: #f0f0f0;
+}
+
+/* Naslov menija */
+.menu-title {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+/* Responsivni dizajn za male ekrane */
 @media (max-width: 600px) {
-  .menu-card {
-    padding: 1rem;
-    margin-bottom: 1.5rem;
+  /* Sakrij zaglavlja tablice */
+  .menu-card table thead {
+    display: none;
   }
 
-  .menu-title {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  table,
-  thead,
-  tbody,
-  th,
-  td,
-  tr {
+  /* Svaki red pretvori u blok */
+  .menu-card table, 
+  .menu-card tbody, 
+  .menu-card tr, 
+  .menu-card td {
     display: block;
     width: 100%;
   }
 
-  /* Sakrij zaglavlja tablice */
-  thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-
-  tr {
-    margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+  .menu-card tr {
+    margin-bottom: 1.5rem;
+    background: #fff;
     padding: 1rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   }
 
-  td {
-    /* Prikaži svaki podatak kao red sa labelom */
-    border: none;
+  .menu-card td {
+    /* Da li labela i podatak budu jedan ispod drugog */
+    text-align: right;
     padding-left: 50%;
     position: relative;
-    text-align: left;
+    border: none;
+    border-bottom: 1px solid #eee;
   }
 
-  /* Dodaj labelu prije svakog podatka */
-  td:before {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    width: 45%;
-    white-space: nowrap;
-    font-weight: 600;
-    color: #555;
+  .menu-card td:last-child {
+    border-bottom: 0;
+  }
+
+  /* Prikaži labelu preko vrijednosti pomoću data-label atributa */
+  .menu-card td::before {
     content: attr(data-label);
+    position: absolute;
+    left: 1rem;
+    width: 45%;
+    padding-left: 0.5rem;
+    font-weight: 600;
+    text-align: left;
+    color: #555;
   }
 }
 
